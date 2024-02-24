@@ -18,19 +18,14 @@ class AppTheme {
   static ThemeData dark = ThemeData.dark().copyWith(
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.seedColor,
-      // background: Colors.black,
+      brightness: Brightness.dark,
     ),
-
-    // colorScheme: ColorScheme.dark(),
     scaffoldBackgroundColor: const Color.fromARGB(255, 8, 9, 12),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: const AppBarTheme().copyWith(
       backgroundColor: Colors.transparent,
-      iconTheme: IconThemeData(opacity: 1),
+      // iconTheme: const IconThemeData(opacity: 1),
+      // titleTextStyle: const TextStyle(color: Colors.white, fontSize: 25)
     ),
-    // iconTheme: const IconThemeData(opacity: 1),
-    // dividerTheme: const DividerThemeData(thickness: .3),
-
-    primaryIconTheme: const IconThemeData(opacity: 1),
     textTheme: GoogleFonts.urbanistTextTheme(
       ThemeData.dark().textTheme,
     ),

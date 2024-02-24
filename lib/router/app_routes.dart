@@ -14,5 +14,11 @@ class AppRoutes {
 
   static Route signUp = Route(path: '/signUp', name: 'signUp');
   static Route signIn = Route(path: '/signIn', name: 'signIn');
+  static Route forgotPassword =
+      Route(path: '/forgotPassword', name: 'forgotPassword');
+  static Route otpInput = Route(path: '/otpInput', name: 'otpInput');
+  static Route newPassword = Route(path: '/newPassword', name: 'newPassword');
+  static Route passwordChanged =
+      Route(path: '/passwordChanged', name: 'passwordChanged');
   static Route home = Route(path: '/', name: 'home');
 }

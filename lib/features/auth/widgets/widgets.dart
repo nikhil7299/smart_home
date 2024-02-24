@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_home/common/app_colors.dart';
+import 'package:iconly/iconly.dart';
 import 'package:smart_home/common/text_style_ext.dart';
 
 class LoginButton extends StatelessWidget {
@@ -66,10 +66,72 @@ class RichTwoPartsText extends StatelessWidget {
         children: [
           TextSpan(
             text: text2,
-            style: context.tm!.copyWith(color: AppColors.seedColor),
+            style: context.tm
+                ?.copyWith(color: Theme.of(context).colorScheme.primary),
             recognizer: TapGestureRecognizer()..onTap = onTap,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class PasswordField extends StatelessWidget {
+  const PasswordField({
+    super.key,
+    required this.isDark,
+  });
+
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
+      cursorColor: isDark ? Colors.grey : Colors.black54,
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.blueGrey.withOpacity(.1),
+        hintText: "Password",
+        prefixIcon: const Icon(IconlyLight.lock, size: 20),
+        suffixIcon: const Icon(IconlyLight.hide, size: 20),
+        prefixIconColor: isDark ? Colors.white : Colors.black87,
+        suffixIconColor: isDark ? Colors.white : Colors.black87,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    );
+  }
+}
+
+class EmailField extends StatelessWidget {
+  const EmailField({
+    super.key,
+    required this.isDark,
+  });
+
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
+      cursorColor: isDark ? Colors.grey : Colors.black54,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.blueGrey.withOpacity(.1),
+        hintText: "Email",
+        prefixIcon: const Icon(IconlyLight.message, size: 20),
+        prefixIconColor: isDark ? Colors.white : Colors.black87,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide.none,
+        ),
       ),
     );
   }

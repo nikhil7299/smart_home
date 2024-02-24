@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:smart_home/common/app_colors.dart';
 import 'package:smart_home/common/text_style_ext.dart';
 
 typedef CloseLoadingScreen = bool Function();
@@ -54,12 +52,11 @@ class LoadingScreen {
 
     final renderBox = context.findRenderObject() as RenderBox;
     final size = renderBox.size;
-    final theme = Theme.of(context);
-    final isDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
     final overlay = OverlayEntry(
       builder: (context) {
         return Material(
-          color: Colors.black.withAlpha(200),
+          color: Colors.black.withOpacity(.8),
           child: Center(
             child: Container(
               padding: const EdgeInsets.all(20),
@@ -70,8 +67,7 @@ class LoadingScreen {
                 minHeight: size.height * 0.2,
               ),
               decoration: BoxDecoration(
-                color:
-                    isDark ? theme.colorScheme.onSurface : Colors.grey.shade100,
+                color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
@@ -79,8 +75,7 @@ class LoadingScreen {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SpinKitFadingCircle(
-                      color: AppColors.seedColor, size: 60),
+                  SpinKitFadingCircle(color: colorScheme.primary, size: 60),
                   StreamBuilder<String>(
                     stream: textController.stream,
                     builder: (context, snapshot) {

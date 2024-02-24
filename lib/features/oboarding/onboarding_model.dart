@@ -1,9 +1,11 @@
 class OnboardingModel {
-  final String assetPath;
+  final String assetPathLight;
+  final String assetPathDark;
   final String title;
   final String subTitle;
   const OnboardingModel({
-    required this.assetPath,
+    required this.assetPathLight,
+    required this.assetPathDark,
     required this.title,
     required this.subTitle,
   });

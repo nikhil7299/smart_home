@@ -4,17 +4,20 @@ import 'package:smart_home/features/oboarding/onboarding_model.dart';
 
 final List<OnboardingModel> onboardingData = [
   const OnboardingModel(
-    assetPath: AppAssets.onboardingOne,
+    assetPathLight: AppAssets.onboardOneLight,
+    assetPathDark: AppAssets.onboardOneDark,
     title: AppStrings.onboardingOneTitle,
     subTitle: AppStrings.onboardingOneSubtitle,
   ),
   const OnboardingModel(
-    assetPath: AppAssets.onboardingTwo,
+    assetPathLight: AppAssets.onboardTwoLight,
+    assetPathDark: AppAssets.onboardTwoDark,
     title: AppStrings.onboardingTwoTitle,
     subTitle: AppStrings.onboardingTwoSubtitle,
   ),
   const OnboardingModel(
-    assetPath: AppAssets.onboardingThree,
+    assetPathLight: AppAssets.onboardThreeLight,
+    assetPathDark: AppAssets.onboardThreeDark,
     title: AppStrings.onboardingThreeTitle,
     subTitle: AppStrings.onboardingThreeSubtitle,
   ),

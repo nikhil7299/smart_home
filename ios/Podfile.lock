@@ -1,31 +1,28 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_svprogresshud (0.0.7):
-    - Flutter
-    - flutter_svprogresshud/SVProgressHUD_Core (= 0.0.7)
-  - flutter_svprogresshud/SVProgressHUD_Core (0.0.7):
-    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - smart_auth (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_svprogresshud (from `.symlinks/plugins/flutter_svprogresshud/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - smart_auth (from `.symlinks/plugins/smart_auth/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_svprogresshud:
-    :path: ".symlinks/plugins/flutter_svprogresshud/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  smart_auth:
+    :path: ".symlinks/plugins/smart_auth/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_svprogresshud: 821512698d752572c11a1c0ad11fd359c687054e
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 

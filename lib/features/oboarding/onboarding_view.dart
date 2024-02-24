@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_home/animations/fade_in_slide.dart';
 import 'package:smart_home/common/app_colors.dart';
 import 'package:smart_home/common/clippers.dart';
 import 'package:smart_home/features/oboarding/onboarding_data.dart';
@@ -34,7 +34,6 @@ class _OnboardingViewState extends State<OnboardingView> {
     final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
     final brightness = MediaQuery.platformBrightnessOf(context);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
     return Scaffold(
       body: Column(
@@ -52,7 +51,8 @@ class _OnboardingViewState extends State<OnboardingView> {
               },
               itemBuilder: (context, index) {
                 return OnboardingWidget(
-                  assetPath: onboardingData[index].assetPath,
+                  assetPathLight: onboardingData[index].assetPathLight,
+                  assetPathDark: onboardingData[index].assetPathDark,
                   title: onboardingData[index].title,
                   subTitle: onboardingData[index].subTitle,
                 );
@@ -72,7 +72,7 @@ class _OnboardingViewState extends State<OnboardingView> {
           const SizedBox(height: 20),
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
-            switchInCurve: Curves.easeIn,
+            switchInCurve: Curves.easeOut,
             switchOutCurve: Curves.easeOut,
             child: _pageIndex < 2
                 ? Row(
@@ -82,7 +82,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                         onPressed: () {
                           _pageController.animateToPage(2,
                               duration: const Duration(milliseconds: 500),
-                              curve: Curves.elasticOut);
+                              curve: Curves.easeOut);
                         },
                         style: FilledButton.styleFrom(
                           backgroundColor: brightness == Brightness.dark
@@ -95,7 +95,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
                             color: brightness == Brightness.dark
-                                ? null
+                                ? Colors.white
                                 : AppColors.seedColor,
                           ),
                         ),
@@ -104,7 +104,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                         onPressed: () {
                           _pageController.nextPage(
                             duration: const Duration(milliseconds: 500),
-                            curve: Curves.elasticOut,
+                            curve: Curves.easeOut,
                           );
                         },
                         style: FilledButton.styleFrom(
@@ -185,7 +185,7 @@ class CustomButton extends StatelessWidget {
           } else {
             _pageController.nextPage(
               duration: const Duration(milliseconds: 200),
-              curve: Curves.bounceIn,
+              curve: Curves.easeOut,
             );
           }
         },
@@ -207,12 +207,14 @@ class Indicator extends StatelessWidget {
       duration: const Duration(
         milliseconds: 200,
       ),
-      curve: Curves.bounceIn,
+      curve: Curves.easeOut,
       width: isActive ? 30 : 8,
       height: 8,
       margin: const EdgeInsets.symmetric(horizontal: 2),
       decoration: BoxDecoration(
-        color: isActive ? AppColors.seedColor : Colors.grey.withOpacity(.3),
+        color: isActive
+            ? Theme.of(context).colorScheme.primary
+            : Colors.grey.withOpacity(.3),
         borderRadius: BorderRadius.circular(5),
       ),
     );
@@ -220,12 +222,14 @@ class Indicator extends StatelessWidget {
 }
 
 class OnboardingWidget extends StatelessWidget {
-  final String assetPath;
+  final String assetPathLight;
+  final String assetPathDark;
   final String title;
   final String subTitle;
   const OnboardingWidget({
     super.key,
-    required this.assetPath,
+    required this.assetPathLight,
+    required this.assetPathDark,
     required this.title,
     required this.subTitle,
   });
@@ -233,7 +237,9 @@ class OnboardingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final isDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -243,17 +249,22 @@ class OnboardingWidget extends StatelessWidget {
             children: [
               Container(
                 height: size.height * 0.55,
-                decoration: const BoxDecoration(
-                  color: AppColors.seedColor,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary,
                 ),
               ),
               Positioned(
                 bottom: -30,
                 left: 0,
                 right: 0,
-                child: Image.asset(
-                  assetPath,
-                  height: size.height * 0.5,
+                child: FadeInSlide(
+                  duration: .5,
+                  fadeOffset: size.height * 0.25,
+                  direction: FadeSlideDirection.btt,
+                  child: Image.asset(
+                    isDark ? assetPathDark : assetPathLight,
+                    height: size.height * 0.5,
+                  ),
                 ),
               ),
             ],
@@ -262,23 +273,31 @@ class OnboardingWidget extends StatelessWidget {
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: textTheme.headlineLarge!.copyWith(
-              height: 1.3,
-              fontWeight: FontWeight.w900,
+          child: FadeInSlide(
+            duration: .5,
+            fadeOffset: 60,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: textTheme.headlineLarge!.copyWith(
+                height: 1.3,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
         ),
         const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-          child: Text(
-            subTitle,
-            textAlign: TextAlign.center,
-            maxLines: 3,
-            style: textTheme.titleMedium!.copyWith(height: 1.5),
+          child: FadeInSlide(
+            duration: .6,
+            fadeOffset: 60,
+            child: Text(
+              subTitle,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              style: textTheme.titleMedium!.copyWith(height: 1.5),
+            ),
           ),
         ),
       ],

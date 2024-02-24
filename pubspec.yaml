@@ -14,6 +14,7 @@ dependencies:
   google_fonts: ^6.1.0
   iconly: ^1.0.1
   icons_plus: ^5.0.0
+  pinput: ^4.0.0
 
 dev_dependencies:
   flutter_test:
