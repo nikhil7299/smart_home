@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_home/animations/fade_in_slide.dart';
 import 'package:smart_home/common/app_colors.dart';
 import 'package:smart_home/common/clippers.dart';
+import 'package:smart_home/common/text_style_ext.dart';
 import 'package:smart_home/features/oboarding/onboarding_data.dart';
 import 'package:smart_home/router/app_routes.dart';
 
@@ -32,8 +33,8 @@ class _OnboardingViewState extends State<OnboardingView> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final theme = Theme.of(context);
-    final brightness = MediaQuery.platformBrightnessOf(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
 
     return Scaffold(
       body: Column(
@@ -42,7 +43,6 @@ class _OnboardingViewState extends State<OnboardingView> {
             child: PageView.builder(
               itemCount: onboardingData.length,
               controller: _pageController,
-              clipBehavior: Clip.none,
               physics: const BouncingScrollPhysics(),
               onPageChanged: (index) {
                 setState(() {
@@ -67,128 +67,66 @@ class _OnboardingViewState extends State<OnboardingView> {
               }),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: size.height * 0.01),
           const Divider(thickness: .2),
-          const SizedBox(height: 20),
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            switchInCurve: Curves.easeOut,
-            switchOutCurve: Curves.easeOut,
-            child: _pageIndex < 2
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      FilledButton(
-                        onPressed: () {
-                          _pageController.animateToPage(2,
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeOut);
-                        },
-                        style: FilledButton.styleFrom(
-                          backgroundColor: brightness == Brightness.dark
-                              ? AppColors.greyColor
-                              : theme.colorScheme.primaryContainer,
-                          fixedSize: Size(size.width * 0.42, 50),
-                        ),
-                        child: Text(
-                          "Skip",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            color: brightness == Brightness.dark
-                                ? Colors.white
-                                : AppColors.seedColor,
-                          ),
-                        ),
-                      ),
-                      FilledButton(
-                        onPressed: () {
-                          _pageController.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeOut,
-                          );
-                        },
-                        style: FilledButton.styleFrom(
-                          fixedSize: Size(size.width * 0.42, 50),
-                        ),
-                        child: const Text("Continue",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  )
-                : FilledButton(
-                    onPressed: () => context.go(AppRoutes.getStarted.path),
-                    style: FilledButton.styleFrom(
-                        fixedSize: Size(size.width * 0.9, 50)),
-                    child: const Text(
-                      "Let's Get Started",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-          ),
-          const SizedBox(height: 40),
         ],
       ),
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  final PageController _pageController;
-  final bool isLastPage;
-  const CustomButton({
-    super.key,
-    required PageController pageController,
-    this.isLastPage = false,
-  }) : _pageController = pageController;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-      width: isLastPage ? 120 : 50,
-      height: 50,
-      child: FilledButton(
-        style: FilledButton.styleFrom(
-          backgroundColor: AppColors.seedColor,
-          padding: EdgeInsets.zero,
-        ),
-        child: isLastPage
-            ? RichText(
-                text: TextSpan(
-                  text: "Log In ",
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .titleMedium!
-                      .copyWith(fontWeight: FontWeight.w500),
-                  children: const [
-                    WidgetSpan(
-                      child: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 18,
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+            top: size.height * 0.02, bottom: size.height * 0.043),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          switchInCurve: Curves.easeOutBack,
+          switchOutCurve: Curves.easeOutBack,
+          child: _pageIndex < 2
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FilledButton(
+                      onPressed: () {
+                        _pageController.animateToPage(2,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeOut);
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: isDark
+                            ? AppColors.greyColor
+                            : colorScheme.primaryContainer,
+                        fixedSize: Size(size.width * 0.42, 50),
                       ),
-                    )
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          color: isDark ? Colors.white : colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                    FilledButton(
+                      onPressed: () {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeOut,
+                        );
+                      },
+                      style: FilledButton.styleFrom(
+                        fixedSize: Size(size.width * 0.42, 50),
+                      ),
+                      child: const Text("Continue",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    ),
                   ],
+                )
+              : FilledButton(
+                  onPressed: () => context.go(AppRoutes.getStarted.path),
+                  style: FilledButton.styleFrom(
+                      fixedSize: Size(size.width * 0.9, 50)),
+                  child: const Text(
+                    "Let's Get Started",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              )
-            : const Icon(
-                Icons.arrow_forward_ios_rounded,
-              ),
-        onPressed: () {
-          if (isLastPage) {
-            // Navigator.push(
-            //   context,
-            //   LoginView.route(),
-            // );
-
-            // Navigator.pushReplacement(context, LoginView.route());
-          } else {
-            _pageController.nextPage(
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeOut,
-            );
-          }
-        },
+        ),
       ),
     );
   }
@@ -238,7 +176,6 @@ class OnboardingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     final isDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -261,6 +198,7 @@ class OnboardingWidget extends StatelessWidget {
                   duration: .5,
                   fadeOffset: size.height * 0.25,
                   direction: FadeSlideDirection.btt,
+                  curve: Curves.easeOutBack,
                   child: Image.asset(
                     isDark ? assetPathDark : assetPathLight,
                     height: size.height * 0.5,
@@ -270,36 +208,40 @@ class OnboardingWidget extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        // SizedBox(height: size.height * 0.02),
+        const Spacer(),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: FadeInSlide(
             duration: .5,
             fadeOffset: 60,
+            curve: Curves.easeOutBack,
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: textTheme.headlineLarge!.copyWith(
+              style: context.hl!.copyWith(
                 height: 1.3,
                 fontWeight: FontWeight.w900,
               ),
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: size.height * 0.02),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: FadeInSlide(
-            duration: .6,
+            duration: .5,
             fadeOffset: 60,
+            curve: Curves.easeOutBack,
             child: Text(
               subTitle,
               textAlign: TextAlign.center,
               maxLines: 3,
-              style: textTheme.titleMedium!.copyWith(height: 1.5),
+              style: context.tm!.copyWith(height: 1.5),
             ),
           ),
         ),
+        const Spacer(),
       ],
     );
   }

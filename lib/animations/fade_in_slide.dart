@@ -7,6 +7,7 @@ class FadeInSlide extends StatefulWidget {
     super.key,
     required this.child,
     required this.duration,
+    this.curve = Curves.bounceOut,
     this.fadeOffset = 40,
     this.direction = FadeSlideDirection.ttb,
   });
@@ -14,6 +15,7 @@ class FadeInSlide extends StatefulWidget {
   final Widget child;
   final double duration;
   final double fadeOffset;
+  final Curve curve;
   final FadeSlideDirection direction;
 
   @override
@@ -33,11 +35,14 @@ class _FadeInSlideState extends State<FadeInSlide>
     controller = AnimationController(
         duration: Duration(milliseconds: (1000 * widget.duration).toInt()),
         vsync: this);
-    inAnimation =
-        Tween<double>(begin: -widget.fadeOffset, end: 0).animate(controller)
-          ..addListener(() {
-            setState(() {});
-          });
+    inAnimation = Tween<double>(begin: -widget.fadeOffset, end: 0).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: widget.curve,
+      ),
+    )..addListener(() {
+        setState(() {});
+      });
 
     opacityAnimation = Tween<double>(begin: 0, end: 1).animate(controller)
       ..addListener(() {

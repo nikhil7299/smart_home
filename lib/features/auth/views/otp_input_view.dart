@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_home/animations/fade_in_slide.dart';
 import 'package:smart_home/common/app_colors.dart';
 import 'package:smart_home/common/text_style_ext.dart';
 import 'package:smart_home/router/app_routes.dart';
@@ -26,14 +27,20 @@ class OTPInputView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         children: [
           const SizedBox(height: 20),
-          Text(
-            "Enter OTP Code 🔐",
-            style: context.hm!.copyWith(fontWeight: FontWeight.bold),
+          FadeInSlide(
+            duration: .4,
+            child: Text(
+              "Enter OTP Code 🔐",
+              style: context.hm!.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
           const SizedBox(height: 15),
-          Text(
-            "Please check your email inbox for a message from Smartome. Enter the one-time verification code below.",
-            style: context.tm,
+          FadeInSlide(
+            duration: .5,
+            child: Text(
+              "Please check your email inbox for a message from Smartome. Enter the one-time verification code below.",
+              style: context.tm,
+            ),
           ),
           const SizedBox(height: 25),
           _buildPinPut(context),
@@ -43,15 +50,21 @@ class OTPInputView extends StatelessWidget {
             builder: (context, value, child) {
               return Column(
                 children: [
-                  Text(
-                    "You can resend the code in $value seconds",
-                    style: context.tm,
-                    textAlign: TextAlign.center,
+                  FadeInSlide(
+                    duration: .7,
+                    child: Text(
+                      "You can resend the code in $value seconds",
+                      style: context.tm,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   const SizedBox(height: 15),
-                  TextButton(
-                    onPressed: value > 0 ? null : () {},
-                    child: const Text("Resend Code"),
+                  FadeInSlide(
+                    duration: .8,
+                    child: TextButton(
+                      onPressed: value > 0 ? null : () {},
+                      child: const Text("Resend Code"),
+                    ),
                   ),
                 ],
               );
@@ -85,22 +98,25 @@ class OTPInputView extends StatelessWidget {
     //   ),
     // );
 
-    return Pinput(
-      defaultPinTheme: defaultPinTheme,
-      focusedPinTheme: focusedPinTheme,
-      // submittedPinTheme: submittedPinTheme,
-      validator: (s) {
-        return s == '2222' ? null : 'Pin is incorrect';
-      },
-      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-      showCursor: true,
-      autofocus: true,
-      onCompleted: (pin) {
-        print(pin);
-        if (pin == '2222') {
-          context.goNamed(AppRoutes.newPassword.name);
-        }
-      },
+    return FadeInSlide(
+      duration: .6,
+      child: Pinput(
+        defaultPinTheme: defaultPinTheme,
+        focusedPinTheme: focusedPinTheme,
+        // submittedPinTheme: submittedPinTheme,
+        validator: (s) {
+          return s == '2222' ? null : 'Pin is incorrect';
+        },
+        pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+        showCursor: true,
+        autofocus: true,
+        onCompleted: (pin) {
+          print(pin);
+          if (pin == '2222') {
+            context.goNamed(AppRoutes.newPassword.name);
+          }
+        },
+      ),
     );
   }
 }

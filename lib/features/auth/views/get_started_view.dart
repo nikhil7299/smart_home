@@ -24,7 +24,7 @@ class GetStartedView extends StatelessWidget {
           children: [
             const Spacer(),
             const FadeInSlide(
-              duration: .1,
+              duration: .4,
               child: Icon(
                 Icons.dashboard_rounded,
                 size: 60,
@@ -32,7 +32,7 @@ class GetStartedView extends StatelessWidget {
             ),
             const Spacer(),
             FadeInSlide(
-              duration: .2,
+              duration: .5,
               child: Text(
                 "Let's Get Started!",
                 style: theme.textTheme.headlineMedium!
@@ -42,7 +42,7 @@ class GetStartedView extends StatelessWidget {
             ),
             SizedBox(height: height * 0.015),
             const FadeInSlide(
-              duration: .3,
+              duration: .6,
               child: Text(
                 "Let's dive in into your account",
                 textAlign: TextAlign.center,
@@ -50,7 +50,7 @@ class GetStartedView extends StatelessWidget {
             ),
             const Spacer(),
             FadeInSlide(
-              duration: .4,
+              duration: .7,
               child: LoginButton(
                 icon: Brand(Brands.google, size: 25),
                 text: "Continue with Google",
@@ -59,7 +59,7 @@ class GetStartedView extends StatelessWidget {
             ),
             SizedBox(height: height * 0.02),
             FadeInSlide(
-              duration: .5,
+              duration: .8,
               child: LoginButton(
                 icon: Icon(
                   Icons.apple,
@@ -71,7 +71,7 @@ class GetStartedView extends StatelessWidget {
             ),
             SizedBox(height: height * 0.02),
             FadeInSlide(
-              duration: .6,
+              duration: .9,
               child: LoginButton(
                 icon: Brand(Brands.facebook, size: 25),
                 text: "Continue with Facebook",
@@ -80,7 +80,7 @@ class GetStartedView extends StatelessWidget {
             ),
             SizedBox(height: height * 0.02),
             FadeInSlide(
-              duration: .7,
+              duration: 1.0,
               child: LoginButton(
                 icon: Brand(Brands.twitter, size: 25),
                 text: "Continue with Twitter",
@@ -89,7 +89,7 @@ class GetStartedView extends StatelessWidget {
             ),
             const Spacer(),
             FadeInSlide(
-              duration: .8,
+              duration: 1.1,
               child: FilledButton(
                 onPressed: () => context.push(AppRoutes.signUp.path),
                 style: FilledButton.styleFrom(
@@ -103,7 +103,7 @@ class GetStartedView extends StatelessWidget {
             ),
             SizedBox(height: height * 0.02),
             FadeInSlide(
-              duration: .9,
+              duration: 1.2,
               child: FilledButton(
                 onPressed: () => context.push(AppRoutes.signIn.path),
                 style: FilledButton.styleFrom(

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconly/iconly.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:smart_home/animations/fade_in_slide.dart';
 import 'package:smart_home/common/loading_overlay.dart';
@@ -54,25 +53,9 @@ class _SignUpViewState extends State<SignUpView> {
             ),
           ),
           const SizedBox(height: 10),
-          FadeInSlide(
+          const FadeInSlide(
             duration: .5,
-            child: TextField(
-              onTapOutside: (event) =>
-                  FocusManager.instance.primaryFocus!.unfocus(),
-              cursorColor: isDark ? Colors.grey : Colors.black54,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.blueGrey.withOpacity(.1),
-                hintText: "Email",
-                prefixIcon: const Icon(IconlyLight.message, size: 20),
-                prefixIconColor: isDark ? Colors.white : Colors.black87,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
+            child: EmailField(),
           ),
           const SizedBox(height: 20),
           FadeInSlide(
@@ -83,28 +66,9 @@ class _SignUpViewState extends State<SignUpView> {
             ),
           ),
           const SizedBox(height: 10),
-          FadeInSlide(
+          const FadeInSlide(
             duration: .6,
-            child: TextField(
-              onTapOutside: (event) =>
-                  FocusManager.instance.primaryFocus!.unfocus(),
-              cursorColor: isDark ? Colors.grey : Colors.black54,
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.blueGrey.withOpacity(.1),
-                hintText: "Password",
-                prefixIcon: const Icon(IconlyLight.lock, size: 20),
-                suffixIcon: const Icon(IconlyLight.hide, size: 20),
-                prefixIconColor: isDark ? Colors.white : Colors.black87,
-                suffixIconColor: isDark ? Colors.white : Colors.black87,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
+            child: PasswordField(),
           ),
           const SizedBox(height: 20),
           FadeInSlide(
