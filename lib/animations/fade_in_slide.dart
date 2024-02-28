@@ -7,7 +7,7 @@ class FadeInSlide extends StatefulWidget {
     super.key,
     required this.child,
     required this.duration,
-    this.curve = Curves.bounceOut,
+    this.curve = Curves.easeInOutBack,
     this.fadeOffset = 40,
     this.direction = FadeSlideDirection.ttb,
   });
